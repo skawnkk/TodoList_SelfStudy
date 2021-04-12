@@ -1,0 +1,55 @@
+.icon{
+  width:2em;
+  height:2em;
+}
+
+.icon-add-open{
+  color: #0075DE;
+}
+
+.icon-add-close{
+ color: #BDBDBD;
+}
+
+.icon-delete{
+  color: #BDBDBD;
+}
+
+input{
+  border: none;
+  width: 276px;
+  height: 23px;
+}
+
+.card-input-title::placeholder{
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.card-btn-section{
+  margin-top: 1em;
+}
+
+.card-btn-section{
+  display: flex;
+}
+
+.btn{
+  padding: 10px;
+  width: 134px;
+  height: 40px;
+  background: #E0E0E0;
+  border-radius: 6px;
+  border: none;
+  margin: 0px 4px;
+}
+
+.edit-btn{
+  background: #0075DE !important;
+  color: #fff;
+}
+
+.enroll-btn{ 
+  background: #86C6FF;
+  color: rgba(255, 255, 255, 0.4);
+}
