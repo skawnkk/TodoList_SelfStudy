@@ -23,6 +23,7 @@ function App() {
     <TodoProvider>
       <GlobalStyle />
       <TemplateHead />
+
       <TemplateBoard>
         <TemplateColumn>해야할 일</TemplateColumn>
         <TemplateColumn>하고 있는 일</TemplateColumn>

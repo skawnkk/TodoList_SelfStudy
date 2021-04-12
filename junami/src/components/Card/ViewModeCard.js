@@ -44,8 +44,8 @@ function ViewModeCard({ section }) {
   };
   return (
     <div>
-      {viewList.map((todo) => (
-        <ViewModeCardBlock id={todo.id}>
+      {viewList.map((todo, idx) => (
+        <ViewModeCardBlock id={todo.id} key={idx}>
           <div>
             <CardTitle>{todo.title}</CardTitle>
             <CardContent>{todo.content}</CardContent>

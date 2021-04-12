@@ -14,6 +14,7 @@ function CardFunctions({ onToggle, section, open }) {
     setTitleValue(target.value);
     onBtnChange(target.value.length);
   };
+
   const handleContentChange = ({ target }) => {
     setContentValue(target.value);
   };

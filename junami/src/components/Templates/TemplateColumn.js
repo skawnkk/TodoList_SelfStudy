@@ -1,8 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { HiX, HiOutlinePlusSm } from "react-icons/hi";
-import ViewModeCard from "../Card/ViewModeCard";
-import Card from "../Card/Card";
 import CardFunctions from "../Card/CardFunctions";
 
 const TemplateColumnBlock = styled.div`
@@ -47,11 +45,9 @@ const CountBadge = styled.div`
   line-height: 25px;
   text-align: center;
 
-  /* Black */
   color: #010101;
   background: #bdbdbd;
 
-  /* Inside Auto Layout */
   margin: 0px 10px;
 `;
 
@@ -79,10 +75,11 @@ export function TemplateColumn({ children }) {
           <HiX className="icon-delete" />
         </div>
       </ColumnTitleBlock>
-      <CardFunctions onToggle={onToggle} open={open} section={type}>
-        <Card onToggle={onToggle} section={type} open={open}></Card>
-        <ViewModeCard section={type}></ViewModeCard>
-      </CardFunctions>
+      <CardFunctions
+        onToggle={onToggle}
+        open={open}
+        section={type}
+      ></CardFunctions>
     </TemplateColumnBlock>
   );
 }
