@@ -9,13 +9,14 @@ function CardList({ onToggle, todo, columnType }) {
   return (
     <div onDoubleClick={handleDoubleClick}>
       {editMode ? (
-        <EditModeCard todo={todo} onToggle={onToggle} columnType={columnType} />
-      ) : (
-        <ViewModeCard
+        <EditModeCard
           todo={todo}
           onToggle={onToggle}
-          setEditMode={setEditMode}
+          columnType={columnType}
+          handleDoubleClick={handleDoubleClick}
         />
+      ) : (
+        <ViewModeCard todo={todo} onToggle={onToggle} />
       )}
     </div>
   );

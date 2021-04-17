@@ -32,6 +32,7 @@ export function Column({ children, onLog }) {
         open={open}
         onToggle={onToggle}
         setItemCount={setItemCount}
+        onLog={onLog}
       ></CardFunctions>
     </TemplateColumnBlock>
   );

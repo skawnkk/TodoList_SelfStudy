@@ -2,7 +2,13 @@ import styled from "styled-components";
 import { useState, useRef } from "react";
 import { useTodoDispatch, useTodoNextId } from "./CardContext";
 
-function EditModeCard({ onToggle, todo, columnType, handleDoubleClick }) {
+function EditModeCard({
+  onToggle,
+  todo,
+  columnType,
+  handleDoubleClick,
+  onLog,
+}) {
   const [title, setTitleValue] = useState(todo.title);
   const [content, setContentValue] = useState(todo.content);
 
@@ -43,11 +49,18 @@ function EditModeCard({ onToggle, todo, columnType, handleDoubleClick }) {
         },
       });
       onToggle();
+      onLog({
+        cardTitle: title,
+        columnTitle: columnType,
+        modeType: "add",
+        publishedTime: Date.now(),
+      });
+      nextId.current += 1;
     } else {
       dispatch({
         type: "EDIT",
         todo: {
-          id: todo.id,
+          id: nextId.current,
           title: title,
           content: content,
           type: columnType,
@@ -56,7 +69,6 @@ function EditModeCard({ onToggle, todo, columnType, handleDoubleClick }) {
       handleDoubleClick();
     }
   };
-
   const handleCancel = (e) => {
     e.preventDefault();
     const targetBtn = e.target.nextSibling.defaultValue;
@@ -90,7 +102,6 @@ function EditModeCard({ onToggle, todo, columnType, handleDoubleClick }) {
         />
         <input
           className="btn enroll-btn"
-          id="enrollBtn"
           type="submit"
           value={todo ? "수정" : "등록"}
           ref={btnDom}
