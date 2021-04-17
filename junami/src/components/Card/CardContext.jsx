@@ -28,12 +28,20 @@ const initialTodos = [
 ];
 
 function todoReducer(state, action) {
+  console.log(state);
+  console.log(action);
   switch (action.type) {
     case "CREATE":
       return state.concat(action.todo);
-    case "TOGGLE":
+    case "EDIT":
       return state.map((todo) =>
-        todo.id === action.id ? { ...todo, done: !todo.done } : todo
+        todo.id === action.todo.id
+          ? {
+              ...todo,
+              title: action.todo.title,
+              content: action.todo.content,
+            }
+          : todo
       );
     case "REMOVE":
       return state.filter((todo) => todo.id !== action.id);

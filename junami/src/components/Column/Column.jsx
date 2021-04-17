@@ -3,6 +3,42 @@ import styled from "styled-components";
 import { HiX, HiOutlinePlusSm } from "react-icons/hi";
 import CardFunctions from "../Card/CardFunctions";
 
+export function Column({ children, onLog }) {
+  const [open, setOpen] = useState(false);
+  const [item_count, setItemCount] = useState(0);
+  const onToggle = () => setOpen(!open);
+  let type;
+  if (children === "해야할 일") type = "todo";
+  if (children === "하고 있는 일") type = "doing";
+  if (children === "완료한 일") type = "done";
+
+  return (
+    <TemplateColumnBlock>
+      <ColumnTitleBlock>
+        <div>
+          {children}
+          <CountBadge>{item_count}</CountBadge>
+        </div>
+        <div>
+          <HiOutlinePlusSm
+            className={open ? "icon-add-open" : "icon-add-close"}
+            onClick={onToggle}
+          />
+          <HiX className="icon-delete" />
+        </div>
+      </ColumnTitleBlock>
+      <CardFunctions
+        columnType={type}
+        open={open}
+        onToggle={onToggle}
+        setItemCount={setItemCount}
+      ></CardFunctions>
+    </TemplateColumnBlock>
+  );
+}
+
+export default Column;
+
 const TemplateColumnBlock = styled.div`
   width: 308px;
   margin-right: 1em;
@@ -50,38 +86,3 @@ const CountBadge = styled.div`
 
   margin: 0px 10px;
 `;
-
-export function Column({ children, onLog }) {
-  const [open, setOpen] = useState(false);
-  const onToggle = () => setOpen(!open);
-  let type;
-  if (children === "해야할 일") type = "todo";
-  if (children === "하고 있는 일") type = "doing";
-  if (children === "완료한 일") type = "done";
-
-  return (
-    <TemplateColumnBlock>
-      <ColumnTitleBlock>
-        <div>
-          {children}
-          <CountBadge>2</CountBadge>
-        </div>
-        <div>
-          <HiOutlinePlusSm
-            className={open ? "icon-add-open" : "icon-add-close"}
-            onClick={onToggle}
-            open={open}
-          />
-          <HiX className="icon-delete" />
-        </div>
-      </ColumnTitleBlock>
-      <CardFunctions
-        onToggle={onToggle}
-        open={open}
-        section={type}
-      ></CardFunctions>
-    </TemplateColumnBlock>
-  );
-}
-
-export default Column;

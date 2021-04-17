@@ -1,7 +1,25 @@
 import styled, { css, keyframes } from "styled-components";
-// import IconButton from "../utils/IconButton";
 import LogCommit from "./LogCommit";
 import { HiX } from "react-icons/hi";
+
+function LogStorage({ clicked, logs, appear, setLogViewState }) {
+  const handleXbtnClick = () => {
+    setLogViewState(false);
+  };
+  return (
+    <>
+      {clicked && (
+        <LogStorageBlock appear={appear}>
+          <IconX appear={appear} onClick={handleXbtnClick}>
+            <HiX></HiX>
+          </IconX>
+          <LogCommit appear={appear} logs={logs}></LogCommit>
+        </LogStorageBlock>
+      )}
+    </>
+  );
+}
+export default LogStorage;
 
 const slideOut = keyframes`
 from{
@@ -49,23 +67,3 @@ const IconX = styled.div`
       display: block;
     `};
 `;
-
-function LogStorage({ clicked, logs, appear, setLogViewState }) {
-  const handleXbtnClick = () => {
-    setLogViewState(false);
-  };
-  return (
-    <>
-      {clicked && (
-        <LogStorageBlock appear={appear}>
-          {/* <IconButton type="delete"></IconButton> */}
-          <IconX appear={appear} onClick={handleXbtnClick}>
-            <HiX></HiX>
-          </IconX>
-          <LogCommit appear={appear} logs={logs}></LogCommit>
-        </LogStorageBlock>
-      )}
-    </>
-  );
-}
-export default LogStorage;

@@ -1,7 +1,30 @@
 import styled from "styled-components";
-import { useTodoState, useTodoDispatch } from "./CardContext";
+import { useTodoDispatch } from "./CardContext";
 import { HiX } from "react-icons/hi";
 
+function ViewModeCard({ todo }) {
+  const dispatch = useTodoDispatch();
+  const onRemove = (id) => {
+    dispatch({ type: "REMOVE", id });
+  };
+
+  return (
+    <ViewModeCardBlock id={todo.id}>
+      <div>
+        <CardTitle>{todo.title}</CardTitle>
+        <CardContent>{todo.content}</CardContent>
+      </div>
+      <div>
+        <HiX
+          className="icon_add_delete"
+          onClick={() => onRemove(todo.id)}
+        ></HiX>
+      </div>
+    </ViewModeCardBlock>
+  );
+}
+
+export default ViewModeCard;
 const ViewModeCardBlock = styled.div`
   align-items: flex-start;
   padding: 16px;
@@ -34,32 +57,3 @@ const CardContent = styled.div`
   margin: 8px 0px;
   over-flow: hidden;
 `;
-
-function ViewModeCard({ section }) {
-  const todos = useTodoState();
-  const viewList = todos.filter((todo) => todo.type === section);
-  const dispatch = useTodoDispatch();
-  const onRemove = (id) => {
-    dispatch({ type: "REMOVE", id });
-  };
-  return (
-    <div>
-      {viewList.map((todo, idx) => (
-        <ViewModeCardBlock id={todo.id} key={idx}>
-          <div>
-            <CardTitle>{todo.title}</CardTitle>
-            <CardContent>{todo.content}</CardContent>
-          </div>
-          <div>
-            <HiX
-              className="icon_add_delete"
-              onClick={() => onRemove(todo.id)}
-            ></HiX>
-          </div>
-        </ViewModeCardBlock>
-      ))}
-    </div>
-  );
-}
-
-export default ViewModeCard;

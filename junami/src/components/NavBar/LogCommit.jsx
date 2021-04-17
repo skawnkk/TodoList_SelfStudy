@@ -1,6 +1,21 @@
 import styled from "styled-components";
-import crong from "./crong.jpg";
+import Crong from "./crong.jpg";
 import LogMessage from "./LogMessage";
+
+function LogCommit({ logs }) {
+  return (
+    <>
+      {logs.map((log, index) => (
+        <LogBlock key={index}>
+          <UserImg />@ Crong
+          <LogMessage log={log}></LogMessage>
+        </LogBlock>
+      ))}
+    </>
+  );
+}
+
+export default LogCommit;
 
 const LogBlock = styled.div`
   display: flex;
@@ -23,24 +38,8 @@ const LogBlock = styled.div`
 const UserImg = styled.div`
   width: 30px;
   height: 30px;
-  background-image: url(${crong});
+  background-image: url(${Crong});
   background-size: cover;
   border-radius: 50%;
   margin-right: 10px;
 `;
-
-function LogCommit({ appear, logs }) {
-  console.log(logs);
-  return (
-    <>
-      {logs.map((log, index) => (
-        <LogBlock key={index}>
-          <UserImg />@ Crong
-          <LogMessage log={log}></LogMessage>
-        </LogBlock>
-      ))}
-    </>
-  );
-}
-
-export default LogCommit;

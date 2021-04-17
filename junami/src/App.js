@@ -10,8 +10,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: Noto Sans KR;
     font-style: normal;
     overflow:hidden;
-
- 
   }
 `;
 
