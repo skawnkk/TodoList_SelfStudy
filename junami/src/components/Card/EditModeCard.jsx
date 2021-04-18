@@ -2,7 +2,13 @@ import styled from "styled-components";
 import { useState, useRef } from "react";
 import { useTodoDispatch, useTodoNextId } from "./CardContext";
 
-function EditModeCard({ onToggle, todo, columnType, handleDoubleClick }) {
+function EditModeCard({
+  onToggle,
+  todo,
+  columnType,
+  handleDoubleClick,
+  handleLog,
+}) {
   const [title, setTitleValue] = useState(todo.title);
   const [content, setContentValue] = useState(todo.content);
 
@@ -18,7 +24,6 @@ function EditModeCard({ onToggle, todo, columnType, handleDoubleClick }) {
       btnDom.current.classList.remove("edit-btn");
     }
   };
-
   const handleTitleChange = ({ target }) => {
     setTitleValue(target.value);
     onBtnChange(target.value.length);
@@ -31,30 +36,43 @@ function EditModeCard({ onToggle, todo, columnType, handleDoubleClick }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const targetBtn = e.target.defaultValue;
-    if (targetBtn === "등록") {
-      dispatch({
-        type: "CREATE",
-        todo: {
-          id: nextId.current,
-          title: title,
-          content: content,
-          type: columnType,
-        },
-      });
-      onToggle();
-    } else {
-      dispatch({
-        type: "EDIT",
-        todo: {
-          id: todo.id,
-          title: title,
-          content: content,
-          type: columnType,
-        },
-      });
-      handleDoubleClick();
-    }
+    dispatch({
+      type: "CREATE",
+      todo: {
+        id: nextId.current,
+        title: title,
+        content: content,
+        type: columnType,
+      },
+    });
+    onToggle();
+    handleLog({
+      cardTitle: title,
+      columnTitle: columnType,
+      modeType: "add",
+      publishedTime: Date.now(),
+    });
+    nextId.current += 1;
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "EDIT",
+      todo: {
+        id: nextId.current,
+        title: title,
+        content: content,
+        type: columnType,
+      },
+    });
+    handleDoubleClick();
+    handleLog({
+      cardTitle: title,
+      columnTitle: columnType,
+      modeType: "update",
+      publishedTime: Date.now(),
+    });
   };
 
   const handleCancel = (e) => {
@@ -90,11 +108,10 @@ function EditModeCard({ onToggle, todo, columnType, handleDoubleClick }) {
         />
         <input
           className="btn enroll-btn"
-          id="enrollBtn"
           type="submit"
           value={todo ? "수정" : "등록"}
           ref={btnDom}
-          onClick={handleSubmit}
+          onClick={todo ? handleUpdate : handleSubmit}
         />
       </div>
     </CardBlock>
@@ -104,7 +121,6 @@ function EditModeCard({ onToggle, todo, columnType, handleDoubleClick }) {
 export default EditModeCard;
 
 const CardBlock = styled.div`
-  // display: flex;
   background-color: #fff;
   border: 1px solid #0075de;
   border-radius: 5px;

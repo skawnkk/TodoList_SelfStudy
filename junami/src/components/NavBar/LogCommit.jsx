@@ -3,14 +3,35 @@ import Crong from "./crong.jpg";
 import LogMessage from "./LogMessage";
 
 function LogCommit({ logs }) {
+  const timeChecking = (logTime) => {
+    const passedTime = Math.floor((Date.now() - logTime) / 1000);
+    console.log(passedTime);
+    if (passedTime < 3) return "방금 전";
+    if (3 < passedTime && passedTime < 60) return `${passedTime}초 전`;
+    if (60 <= passedTime && passedTime < 3600)
+      return `${Math.floor(passedTime / 60)}분 전`;
+    if (3600 <= passedTime && passedTime < 86400)
+      return `${passedTime / 3600}시간 전`;
+    else return "";
+  };
+
+  logs = [...logs].reverse();
   return (
     <>
-      {logs.map((log, index) => (
-        <LogBlock key={index}>
-          <UserImg />@ Crong
-          <LogMessage log={log}></LogMessage>
-        </LogBlock>
-      ))}
+      {logs.map(
+        (log, index) =>
+          !log.start && (
+            <LogBlock key={index}>
+              <User>
+                <UserImg />@ Crong
+              </User>
+              <LogMessageBlock>
+                <LogMessage log={log}></LogMessage>
+                <Time>{timeChecking(log.publishedTime)}</Time>
+              </LogMessageBlock>
+            </LogBlock>
+          )
+      )}
     </>
   );
 }
@@ -35,6 +56,14 @@ const LogBlock = styled.div`
   margin: auto auto;
 `;
 
+const LogMessageBlock = styled.div`
+  margin-left: 45px;
+`;
+const User = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
 const UserImg = styled.div`
   width: 30px;
   height: 30px;
@@ -42,4 +71,9 @@ const UserImg = styled.div`
   background-size: cover;
   border-radius: 50%;
   margin-right: 10px;
+`;
+const Time = styled.div`
+  margin-top: 10px;
+  font-size: 10px;
+  color: light-grey;
 `;
