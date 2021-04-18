@@ -2,6 +2,7 @@ import "./App.css";
 import StateProvider from "./components/StateProvider";
 import { TodoProvider } from "./components/Card/CardContext";
 import { createGlobalStyle } from "styled-components";
+
 const GlobalStyle = createGlobalStyle`
   body{
     background: #e9ecef;

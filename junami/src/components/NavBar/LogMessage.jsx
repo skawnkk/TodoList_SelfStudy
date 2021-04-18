@@ -1,4 +1,5 @@
 function LogMessage({ log }) {
+  console.log(log);
   switch (log.modeType) {
     case "add":
       return (

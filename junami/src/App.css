@@ -58,3 +58,11 @@ input{
  right: 0px;
  transition: all .5s;
 }
+
+.dnd-item{
+  background: #fff;
+}
+.current {
+  /* background: #e9ecef; */
+  background: #e9ecef
+}

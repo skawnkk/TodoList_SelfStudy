@@ -41,9 +41,9 @@ function StateProvider() {
       <NavBar logs={log} />
 
       <TemplateBoard>
-        <Column onLog={handleLog}>해야할 일</Column>
-        <Column onLog={handleLog}>하고 있는 일</Column>
-        <Column onLog={handleLog}>완료한 일</Column>
+        <Column handleLog={handleLog}>해야할 일</Column>
+        <Column handleLog={handleLog}>하고 있는 일</Column>
+        <Column handleLog={handleLog}>완료한 일</Column>
       </TemplateBoard>
     </>
   );

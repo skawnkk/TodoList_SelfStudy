@@ -2,23 +2,27 @@ import styled from "styled-components";
 import { useTodoDispatch } from "./CardContext";
 import { HiX } from "react-icons/hi";
 
-function ViewModeCard({ todo }) {
+function ViewModeCard({ todo, handleLog, columnType }) {
+  const { id, title, content } = todo;
   const dispatch = useTodoDispatch();
   const onRemove = (id) => {
     dispatch({ type: "REMOVE", id });
+    handleLog({
+      cardTitle: title,
+      columnTitle: columnType,
+      modeType: "delete",
+      publishedTime: Date.now(),
+    });
   };
 
   return (
-    <ViewModeCardBlock id={todo.id}>
+    <ViewModeCardBlock id={id}>
       <div>
-        <CardTitle>{todo.title}</CardTitle>
-        <CardContent>{todo.content}</CardContent>
+        <CardTitle>{title}</CardTitle>
+        <CardContent>{content}</CardContent>
       </div>
       <div>
-        <HiX
-          className="icon_add_delete"
-          onClick={() => onRemove(todo.id)}
-        ></HiX>
+        <HiX className="icon_add_delete" onClick={() => onRemove(id)}></HiX>
       </div>
     </ViewModeCardBlock>
   );
@@ -29,11 +33,9 @@ const ViewModeCardBlock = styled.div`
   align-items: flex-start;
   padding: 16px;
   height: 108px;
-  background: #ffffff;
   box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.3);
   border-radius: 6px;
 
-  /* Inside Auto Layout */
   display: flex;
   justify-content: space-between;
   order: 2;

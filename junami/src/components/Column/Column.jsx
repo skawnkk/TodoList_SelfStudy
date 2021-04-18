@@ -2,8 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import { HiX, HiOutlinePlusSm } from "react-icons/hi";
 import CardFunctions from "../Card/CardFunctions";
+import DragNDrop from "../DragNDrop";
 
-export function Column({ children, onLog }) {
+export function Column({ children, handleLog }) {
   const [open, setOpen] = useState(false);
   const [item_count, setItemCount] = useState(0);
   const onToggle = () => setOpen(!open);
@@ -28,11 +29,12 @@ export function Column({ children, onLog }) {
         </div>
       </ColumnTitleBlock>
       <CardFunctions
+        DragNDrop={DragNDrop}
         columnType={type}
         open={open}
         onToggle={onToggle}
         setItemCount={setItemCount}
-        onLog={onLog}
+        handleLog={handleLog}
       ></CardFunctions>
     </TemplateColumnBlock>
   );

@@ -7,7 +7,7 @@ function EditModeCard({
   todo,
   columnType,
   handleDoubleClick,
-  onLog,
+  handleLog,
 }) {
   const [title, setTitleValue] = useState(todo.title);
   const [content, setContentValue] = useState(todo.content);
@@ -24,7 +24,6 @@ function EditModeCard({
       btnDom.current.classList.remove("edit-btn");
     }
   };
-
   const handleTitleChange = ({ target }) => {
     setTitleValue(target.value);
     onBtnChange(target.value.length);
@@ -37,38 +36,45 @@ function EditModeCard({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const targetBtn = e.target.defaultValue;
-    if (targetBtn === "등록") {
-      dispatch({
-        type: "CREATE",
-        todo: {
-          id: nextId.current,
-          title: title,
-          content: content,
-          type: columnType,
-        },
-      });
-      onToggle();
-      onLog({
-        cardTitle: title,
-        columnTitle: columnType,
-        modeType: "add",
-        publishedTime: Date.now(),
-      });
-      nextId.current += 1;
-    } else {
-      dispatch({
-        type: "EDIT",
-        todo: {
-          id: nextId.current,
-          title: title,
-          content: content,
-          type: columnType,
-        },
-      });
-      handleDoubleClick();
-    }
+    dispatch({
+      type: "CREATE",
+      todo: {
+        id: nextId.current,
+        title: title,
+        content: content,
+        type: columnType,
+      },
+    });
+    onToggle();
+    handleLog({
+      cardTitle: title,
+      columnTitle: columnType,
+      modeType: "add",
+      publishedTime: Date.now(),
+    });
+    nextId.current += 1;
   };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "EDIT",
+      todo: {
+        id: nextId.current,
+        title: title,
+        content: content,
+        type: columnType,
+      },
+    });
+    handleDoubleClick();
+    handleLog({
+      cardTitle: title,
+      columnTitle: columnType,
+      modeType: "update",
+      publishedTime: Date.now(),
+    });
+  };
+
   const handleCancel = (e) => {
     e.preventDefault();
     const targetBtn = e.target.nextSibling.defaultValue;
@@ -105,7 +111,7 @@ function EditModeCard({
           type="submit"
           value={todo ? "수정" : "등록"}
           ref={btnDom}
-          onClick={handleSubmit}
+          onClick={todo ? handleUpdate : handleSubmit}
         />
       </div>
     </CardBlock>
@@ -115,7 +121,6 @@ function EditModeCard({
 export default EditModeCard;
 
 const CardBlock = styled.div`
-  // display: flex;
   background-color: #fff;
   border: 1px solid #0075de;
   border-radius: 5px;
